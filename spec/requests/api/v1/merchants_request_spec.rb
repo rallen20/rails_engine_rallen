@@ -26,8 +26,8 @@ describe "Merchants API" do
   it "can get one merchant's list of items by merchant id" do
     id = create(:merchant).id
     create_list(:item, 3, merchant: Merchant.last)
-    create(:merchant)
-    create_list(:item, 2, merchant: Merchant.last)
+    merchant_2 = create(:merchant)
+    create_list(:item, 2, merchant: merchant_2)
     get "/api/v1/merchants/#{id}/items"
 
     expect(response).to be_successful
@@ -41,13 +41,41 @@ describe "Merchants API" do
     id = create(:merchant).id
     create_list(:invoice, 4, merchant: Merchant.last, customer: Customer.last)
 
-    create(:merchant)
-    create_list(:invoice, 2, merchant: Merchant.last, customer: Customer.last)
+    merchant_2 = create(:merchant)
+    create_list(:invoice, 2, merchant: merchant_2, customer: Customer.last)
     get "/api/v1/merchants/#{id}/invoices"
 
     expect(response).to be_successful
 
     merchant_invoices = JSON.parse(response.body)
     expect(merchant_invoices["data"].count).to eq(4)
+  end
+
+  xit "can return top x merchants ranked by total revenue" do
+    merchant_1 = create(:merchant)
+    merchant_1_items = create_list(:item, 4, merchant: merchant_1)
+    merchant_1_invoices = create_list(:invoice, 4, merchant: merchant_1)
+
+    create(:invoice_items, item: merchant_1_items[0], invoice: merchant_1_invoices[0], quantiy: 1, unit_price: 10)
+    create(:invoice_items, item: merchant_1_items[1], invoice: merchant_1_invoices[1], quantiy: 1, unit_price: 50)
+    create(:invoice_items, item: merchant_1_items[2], invoice: merchant_1_invoices[2], quantiy: 1, unit_price: 50)
+    create(:invoice_items, item: merchant_1_items[3], invoice: merchant_1_invoices[3], quantiy: 1, unit_price: 50)
+
+    merchant_2 = create(:merchant)
+    merchant_2_items = create_list(:item, 4, merchant: merchant_2)
+    create(:invoice_items, item: merchant_2_items[0], invoice: merchant_2_invoices[0], quantiy: 1, unit_price: 50)
+    create(:invoice_items, item: merchant_2_items[1], invoice: merchant_2_invoices[1], quantiy: 1, unit_price: 50)
+    create(:invoice_items, item: merchant_2_items[2], invoice: merchant_2_invoices[2], quantiy: 1, unit_price: 50)
+    create(:invoice_items, item: merchant_2_items[3], invoice: merchant_2_invoices[3], quantiy: 1, unit_price: 50)
+
+
+    merchant_3 = create(:merchant)
+    merchant_3_items = create_list(:item, 4, merchant: merchant_3)
+    create(:invoice_items, item: merchant_3_items[0], invoice: merchant_3_invoices[0], quantiy: 1, unit_price: 50)
+    create(:invoice_items, item: merchant_3_items[1], invoice: merchant_3_invoices[1], quantiy: 1, unit_price: 10)
+    create(:invoice_items, item: merchant_3_items[2], invoice: merchant_3_invoices[2], quantiy: 1, unit_price: 10)
+    create(:invoice_items, item: merchant_3_items[3], invoice: merchant_3_invoices[3], quantiy: 1, unit_price: 50)
+
+    merchant_4 = create(:merchant)
   end
 end
