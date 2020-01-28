@@ -22,4 +22,21 @@ describe "Merchants API" do
     expect(response).to be_successful
     expect(merchant["data"]["id"]).to eq(id.to_s)
   end
+
+  it "can get one merchant's list of items by merchant id" do
+    id = create(:merchant).id
+    create_list(:item, 3, merchant: Merchant.last)
+    create(:merchant)
+    create_list(:item, 2, merchant: Merchant.last)
+    get "/api/v1/merchants/#{id}/items"
+
+    merchant_items = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(merchant_items["data"].count).to eq(3)
+  end
+
+  it "can get one merchant's list of invoices by merchant id" do
+
+  end
 end
