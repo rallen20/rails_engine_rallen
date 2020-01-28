@@ -26,8 +26,8 @@ describe "Merchants API" do
   it "can get one merchant's list of items by merchant id" do
     id = create(:merchant).id
     create_list(:item, 3, merchant: Merchant.last)
-    create(:merchant)
-    create_list(:item, 2, merchant: Merchant.last)
+    merchant_2 = create(:merchant)
+    create_list(:item, 2, merchant: merchant_2)
     get "/api/v1/merchants/#{id}/items"
 
     expect(response).to be_successful
@@ -41,8 +41,8 @@ describe "Merchants API" do
     id = create(:merchant).id
     create_list(:invoice, 4, merchant: Merchant.last, customer: Customer.last)
 
-    create(:merchant)
-    create_list(:invoice, 2, merchant: Merchant.last, customer: Customer.last)
+    merchant_2 = create(:merchant)
+    create_list(:invoice, 2, merchant: merchant_2, customer: Customer.last)
     get "/api/v1/merchants/#{id}/invoices"
 
     expect(response).to be_successful
