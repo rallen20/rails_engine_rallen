@@ -18,7 +18,7 @@ describe "Merchants API - Find" do
   #   merchant_parsed = JSON.parse(response.body)
   #   expect(merchant_parsed["data"]["id"]).to eq(merchant.id.to_s)
   # end
-  it "returns a single merchant by created at" do
+  xit "returns a single merchant by created at" do
     merchant = create(:merchant)
 
     get "/api/v1/merchants/find?updated_at=#{merchant.updated_at}"
