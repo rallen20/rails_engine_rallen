@@ -11,6 +11,9 @@ Rails.application.routes.draw do
         get '/invoices', to: 'merchant_invoices#index'
         get '/items', to: 'merchant_items#index'
       end
+      namespace :invoices do
+        get '/find', to: 'find#show'
+      end
       resources :invoices, only: [:index, :show]
     end
   end
