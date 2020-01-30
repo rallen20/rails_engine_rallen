@@ -56,7 +56,7 @@ describe "Merchants API" do
     merchant_1_items = create_list(:item, 4, merchant: merchant_1)
     merchant_1_invoices = create_list(:invoice, 4, merchant: merchant_1)
     merchant_1_invoices.each do |invoice|
-      create(:transaction, invoice: invoice)
+      create(:transaction, invoice: invoice, result: 0)
     end
     create(:invoice_item, item: merchant_1_items[0], invoice: merchant_1_invoices[0], quantity: 1, unit_price: 10)
     create(:invoice_item, item: merchant_1_items[1], invoice: merchant_1_invoices[1], quantity: 1, unit_price: 50)
@@ -67,7 +67,7 @@ describe "Merchants API" do
     merchant_2_items = create_list(:item, 4, merchant: merchant_2)
     merchant_2_invoices = create_list(:invoice, 4, merchant: merchant_2)
     merchant_2_invoices.each do |invoice|
-      create(:transaction, invoice: invoice)
+      create(:transaction, invoice: invoice, result: 0)
     end
     create(:invoice_item, item: merchant_2_items[0], invoice: merchant_2_invoices[0], quantity: 1, unit_price: 50)
     create(:invoice_item, item: merchant_2_items[1], invoice: merchant_2_invoices[1], quantity: 1, unit_price: 50)
@@ -79,7 +79,7 @@ describe "Merchants API" do
     merchant_3_items = create_list(:item, 4, merchant: merchant_3)
     merchant_3_invoices = create_list(:invoice, 4, merchant: merchant_3)
     merchant_3_invoices.each do |invoice|
-      create(:transaction, invoice: invoice)
+      create(:transaction, invoice: invoice, result: 0)
     end
     create(:invoice_item, item: merchant_3_items[0], invoice: merchant_3_invoices[0], quantity: 1, unit_price: 50)
     create(:invoice_item, item: merchant_3_items[1], invoice: merchant_3_invoices[1], quantity: 1, unit_price: 10)
