@@ -23,4 +23,39 @@ describe "Invoices API" do
     invoice_parsed = JSON.parse(response.body)
     expect(invoice_parsed["data"]["id"]).to eq(invoice.id.to_s)
   end
+
+  it "returns a collection of associated transactions by invoice id" do
+    invoice = create(:invoice)
+    transactions = create_list(:transaction, 3, invoice: invoice)
+    create_list(:transaction, 2)
+
+    get "/api/v1/invoices/#{invoice.id}/transactions"
+
+    expect(response).to be_successful
+
+    transactions = JSON.parse(response.body)
+    expect(transactions["data"].count).to eq(3)
+  end
+
+  it "returns a collection of associated invoice items by invoice id" do
+    invoice = create(:invoice)
+    invoice_items = create_list(:invoice_item, 4, invoice: invoice)
+    create(:invoice_item)
+
+    get "/api/v1/invoices/#{invoice.id}/items"
+
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body)
+    expect(items["data"].count).to eq(4)
+  end
+
+  xit "returns a collection of associated items by invoice id" do
+  end
+
+  xit "returns the associated customer by invoice id" do
+  end
+
+  xit "returns the associated merchant by invoice id" do
+  end
 end
