@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "Invoice API - Find" do
+describe "Invoice API - Search" do
   it "returns a single invoice by id" do
     invoice = create(:invoice)
 
