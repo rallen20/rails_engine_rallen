@@ -115,8 +115,7 @@ describe "Merchants API - Business Intel" do
       get "/api/v1/merchants/#{merchant.id}/favorite_customer"
 
       expect(response).to be_successful
-
-      favorite_customer = JSON.parse(response.body)
+      favorite_customer = JSON.parse(response.body)["data"]
       expect(favorite_customer["attributes"]["id"]).to eq(customer_2.id)
     end
 end
