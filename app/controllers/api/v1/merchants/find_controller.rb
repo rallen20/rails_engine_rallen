@@ -5,7 +5,7 @@ class Api::V1::Merchants::FindController < ApplicationController
   end
 
   def index
-    merchants = Merchant.where(request.query_parameters)
+    merchants = Merchant.where(request.query_parameters).order(:id)
     render json: MerchantSerializer.new(merchants)
   end
 end
