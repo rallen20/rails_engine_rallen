@@ -48,7 +48,12 @@ Rails.application.routes.draw do
         get '/merchant', to: 'items/merchants#show'
       end
 
-      resources :transactions, only: [:index, :show]
+      namespace :transactions do
+        get '/find_all', to: 'search#index'
+        get '/find', to: 'search#show'
+      end
+      resources :transactions, only: [:index, :show] do
+      end
     end
   end
 end
