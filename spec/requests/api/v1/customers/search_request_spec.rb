@@ -39,4 +39,46 @@ describe "Customers API - Search" do
 
   xit "returns a single customer by updated_at" do
   end
+
+  # find_all
+  it "returns all customers by id" do
+    customer = create(:customer)
+    create_list(:customer, 3)
+
+    get "/api/v1/customers/find_all?id=#{customer.id}"
+
+    expect(response).to be_successful
+
+    customer_parsed = JSON.parse(response.body)
+    expect(customer_parsed["data"].count).to eq(1)
+  end
+
+  it "returns all customers by first_name" do
+    customers = create_list(:customer, 3, first_name: "Ry")
+
+    get "/api/v1/customers/find_all?first_name=#{customers.first.first_name}"
+
+    expect(response).to be_successful
+
+    customer_parsed = JSON.parse(response.body)
+    expect(customer_parsed["data"].count).to eq(3)
+  end
+
+  it "returns all customers by last_name" do
+    customers = create_list(:customer, 2, last_name: "Al")
+
+
+    get "/api/v1/customers/find_all?last_name=#{customers.first.last_name}"
+
+    expect(response).to be_successful
+
+    customer_parsed = JSON.parse(response.body)
+    expect(customer_parsed["data"].count).to eq(2)
+  end
+
+  xit "returns all customers by created_at" do
+  end
+
+  xit "returns all customers by updated_at" do
+  end
 end
