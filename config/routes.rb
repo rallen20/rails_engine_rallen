@@ -53,6 +53,7 @@ Rails.application.routes.draw do
         get '/find', to: 'search#show'
       end
       resources :transactions, only: [:index, :show] do
+        get '/invoice', to: 'transactions/invoices#show'
       end
     end
   end
