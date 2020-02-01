@@ -8,7 +8,6 @@ Rails.application.routes.draw do
         resources :most_revenue, only: [:index]
         resources :revenue, only: [:index]
       end
-
       resources :merchants, only: [:index, :show] do
         get '/invoices', to: 'merchants/invoices#index'
         get '/items', to: 'merchants/items#index'
@@ -19,7 +18,6 @@ Rails.application.routes.draw do
         get '/find_all', to: 'search#index'
         get '/find', to: 'search#show'
       end
-
       resources :invoices, only: [:index, :show] do
         get '/transactions', to: 'invoices/transactions#index'
         get '/items', to: 'invoices/items#index'
@@ -32,7 +30,6 @@ Rails.application.routes.draw do
         get '/find_all', to: 'search#index'
         get '/find', to: 'search#show'
       end
-
       resources :invoice_items, only: [:index, :show] do
         get '/item', to: 'invoice_items/items#show'
         get '/invoice', to: 'invoice_items/invoices#show'
@@ -42,7 +39,6 @@ Rails.application.routes.draw do
         get '/find_all', to: 'search#index'
         get '/find', to: 'search#show'
       end
-
       resources :items, only: [:index, :show] do
         get '/invoice_items', to: 'items/invoice_items#index'
         get '/merchant', to: 'items/merchants#show'
@@ -54,6 +50,9 @@ Rails.application.routes.draw do
       end
       resources :transactions, only: [:index, :show] do
         get '/invoice', to: 'transactions/invoices#show'
+      end
+
+      resources :customers, only: [:index, :show] do
       end
     end
   end
