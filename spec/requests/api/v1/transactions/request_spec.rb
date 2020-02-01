@@ -13,7 +13,7 @@ describe "Transactions API" do
     expect(transactions.count).to eq(3)
   end
 
-  xit "can get one Transaction by id" do
+  it "can get one Transaction by id" do
     transaction = create(:transaction)
 
     get "/api/v1/transactions/#{transaction.id}"
@@ -22,5 +22,16 @@ describe "Transactions API" do
 
     transaction_parsed = JSON.parse(response.body)
     expect(transaction_parsed["data"]["id"]).to eq(transaction.id.to_s)
+  end
+
+  it "returns the associated invoice" do
+    transaction = create(:transaction)
+
+    get "/api/v1/transactions/#{transaction.id}/invoice"
+
+    expect(response).to be_successful
+
+    invoice_parsed = JSON.parse(response.body)
+    expect(invoice_parsed["data"]["id"]).to eq(transaction.invoice.id.to_s)
   end
 end
