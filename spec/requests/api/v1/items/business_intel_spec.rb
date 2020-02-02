@@ -54,4 +54,18 @@ describe "Items API - Business Intel" do
     expect(top_items["data"].count).to eq(3)
     expect(top_items["data"].first["id"]).to eq(item_2.id.to_s)
   end
+
+  xit "ROUTE ONLY, returns the date with the most sales for the given item using the invoice date" do
+    id = create(:item).id
+    
+    get "/api/v1/items/#{id}/best_day"
+
+    expect(response).to be_successful
+    # returns the date with the most sales
+    # for the given item using the invoice date.
+    # If there are multiple days with equal number of sales,
+    # return the most recent day.
+  end
+
+
 end
