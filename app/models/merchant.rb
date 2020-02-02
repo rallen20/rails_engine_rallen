@@ -10,4 +10,13 @@ class Merchant < ApplicationRecord
     .order('total_revenue DESC')
     .limit(merchant_count)
   end
+
+  def self.favorite_merchant(customer_id)
+    joins(invoices: :transactions)
+    .select("merchants.*, count(transactions.id) as total_transactions")
+    .where("invoices.customer_id = #{customer_id} AND transactions.result = 'success'")
+    .group(:id)
+    .order('total_transactions DESC')
+    .limit(1)
+  end
 end
