@@ -66,4 +66,16 @@ describe "Invoice Items API - Search" do
 
   xit "returns a single invoice item by updated_at" do
   end
+
+  it "returns all invoice item by id" do
+    invoice_item = create(:invoice_item)
+    invoice_item_2 = create(:invoice_item)
+
+    get "/api/v1/invoice_items/find_all?id=#{invoice_item.id}"
+
+    expect(response).to be_successful
+
+    invoice_item_parsed = JSON.parse(response.body)["data"]
+    expect(invoice_item_parsed.count).to eq(1)
+  end
 end
