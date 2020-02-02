@@ -34,4 +34,10 @@ describe "Transactions API" do
     invoice_parsed = JSON.parse(response.body)
     expect(invoice_parsed["data"]["id"]).to eq(transaction.invoice.id.to_s)
   end
+
+  it "can return random" do
+    create_list(:transaction, 3)
+    get "/api/v1/transactions/random"
+    expect(response).to be_successful
+  end
 end
