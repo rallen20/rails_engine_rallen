@@ -34,10 +34,24 @@ describe "Customers API - Search" do
     expect(customer_parsed["data"]["id"]).to eq(customer.id.to_s)
   end
 
-  xit "returns a single customer by created_at" do
+  it "returns a single customer by created_at" do
+    customer = create(:customer, created_at: "2010-01-01 00:00:00 UTC")
+    get "/api/v1/customers/find?created_at=2010-01-01"
+
+    expect(response).to be_successful
+
+    customer_parsed = JSON.parse(response.body)
+    expect(customer_parsed["data"]["id"]).to eq(customer.id.to_s)
   end
 
-  xit "returns a single customer by updated_at" do
+  it "returns a single customer by updated_at" do
+    customer = create(:customer, updated_at: "2010-01-01 00:00:00 UTC")
+    get "/api/v1/customers/find?updated_at=2010-01-01"
+
+    expect(response).to be_successful
+
+    customer_parsed = JSON.parse(response.body)
+    expect(customer_parsed["data"]["id"]).to eq(customer.id.to_s)
   end
 
   # find_all
@@ -76,9 +90,23 @@ describe "Customers API - Search" do
     expect(customer_parsed["data"].count).to eq(2)
   end
 
-  xit "returns all customers by created_at" do
+  it "returns all customers by created_at" do
+    create_list(:customer, 3, created_at: "2010-03-01 00:00:00 UTC")
+    get "/api/v1/customers/find_all?created_at=2010-03-01"
+
+    expect(response).to be_successful
+
+    customer_parsed = JSON.parse(response.body)
+    expect(customer_parsed["data"].count).to eq(3)
   end
 
-  xit "returns all customers by updated_at" do
+  it "returns all customers by updated_at" do
+    create_list(:customer, 2, updated_at: "2010-02-01 00:00:00 UTC")
+    get "/api/v1/customers/find_all?updated_at=2010-02-01"
+
+    expect(response).to be_successful
+
+    customer_parsed = JSON.parse(response.body)
+    expect(customer_parsed["data"].count).to eq(2)
   end
 end
