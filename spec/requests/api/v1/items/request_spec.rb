@@ -47,4 +47,10 @@ describe "Items API" do
     merchant_parsed = JSON.parse(response.body)
     expect(merchant_parsed["data"]["id"]).to eq(item.merchant.id.to_s)
   end
+
+  it "can return random" do
+    create_list(:item, 3)
+    get "/api/v1/items/random"
+    expect(response).to be_successful
+  end
 end

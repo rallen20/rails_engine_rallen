@@ -56,4 +56,10 @@ describe "Customers API" do
     transactions_parsed = JSON.parse(response.body)
     expect(transactions_parsed["data"].count).to eq(4)
   end
+
+  it "can return random" do
+    create_list(:customer, 3)
+    get "/api/v1/customers/random"
+    expect(response).to be_successful
+  end
 end

@@ -84,4 +84,10 @@ describe "Invoices API" do
     merchant = JSON.parse(response.body)
     expect(merchant["data"]["id"]).to eq(invoice.merchant.id.to_s)
   end
+
+  it "can return random" do
+    create_list(:invoice, 3)
+    get "/api/v1/invoices/random"
+    expect(response).to be_successful
+  end
 end
