@@ -50,4 +50,10 @@ describe "Merchants API" do
     merchant_invoices = JSON.parse(response.body)
     expect(merchant_invoices["data"].count).to eq(4)
   end
+
+  it "can return random" do
+    create_list(:merchant, 3)
+    get "/api/v1/merchants/random"
+    expect(response).to be_successful
+  end
 end
