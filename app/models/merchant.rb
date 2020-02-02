@@ -6,7 +6,7 @@ class Merchant < ApplicationRecord
     joins(invoices: [:invoice_items, :transactions])
     .select("merchants.*, SUM(invoice_items.quantity * invoice_items.unit_price) AS total_revenue")
     .group(:id)
-    .where(transactions: {result: 'success'})
+    .merge(Transaction.successful)
     .order('total_revenue DESC')
     .limit(merchant_count)
   end
@@ -14,7 +14,8 @@ class Merchant < ApplicationRecord
   def self.favorite_merchant(customer_id)
     joins(invoices: :transactions)
     .select("merchants.*, count(transactions.id) as total_transactions")
-    .where("invoices.customer_id = #{customer_id} AND transactions.result = 'success'")
+    .merge(Transaction.successful)
+    .where(invoices: {customer_id: customer_id})
     .group(:id)
     .order('total_transactions DESC')
     .limit(1)
