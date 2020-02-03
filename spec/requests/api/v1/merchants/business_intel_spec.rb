@@ -47,50 +47,23 @@ describe "Merchants API - Business Intel" do
       expect(top_merchants["data"].first["id"]).to eq(merchant_2.id.to_s)
     end
 
-    xit "returns the total revenue for date x across all merchants for a specific date" do
+    it "returns the total revenue for date x across all merchants for a specific date" do
       merchant_1 = create(:merchant)
-      merchant_1_items = create_list(:item, 4, merchant: merchant_1)
-      merchant_1_invoices = create_list(:invoice, 4, merchant: merchant_1)
-      merchant_1_invoices.each do |invoice|
-        create(:transaction, invoice: invoice, result: 'success', created_at: Time.parse("2010-10-31"))
-      end
-      create(:invoice_item, item: merchant_1_items[0], invoice: merchant_1_invoices[0], quantity: 1, unit_price: 10)
-      create(:invoice_item, item: merchant_1_items[1], invoice: merchant_1_invoices[1], quantity: 1, unit_price: 50)
-      create(:invoice_item, item: merchant_1_items[2], invoice: merchant_1_invoices[2], quantity: 1, unit_price: 50)
-      create(:invoice_item, item: merchant_1_items[3], invoice: merchant_1_invoices[3], quantity: 1, unit_price: 50)
-
+      item_1 = create(:item)
+      invoice_1 = create(:invoice, created_at: "2010-01-01 00:00:00 UTC")
+      create(:invoice_item, item: item_1, invoice: invoice_1, quantity: 2, unit_price: 1000)
+      create(:transaction, invoice: invoice_1, result: 'success')
       merchant_2 = create(:merchant)
-      merchant_2_items = create_list(:item, 4, merchant: merchant_2)
-      merchant_2_invoices = create_list(:invoice, 4, merchant: merchant_2)
-      merchant_2_invoices.each do |invoice|
-        create(:transaction, invoice: invoice, result: 'success', created_at: Time.parse("2010-10-31"))
-      end
-      create(:invoice_item, item: merchant_2_items[0], invoice: merchant_2_invoices[0], quantity: 1, unit_price: 50)
-      create(:invoice_item, item: merchant_2_items[1], invoice: merchant_2_invoices[1], quantity: 1, unit_price: 50)
-      create(:invoice_item, item: merchant_2_items[2], invoice: merchant_2_invoices[2], quantity: 1, unit_price: 50)
-      create(:invoice_item, item: merchant_2_items[3], invoice: merchant_2_invoices[3], quantity: 1, unit_price: 50)
-
-
-      merchant_3 = create(:merchant)
-      merchant_3_items = create_list(:item, 4, merchant: merchant_3)
-      merchant_3_invoices = create_list(:invoice, 4, merchant: merchant_3)
-      merchant_3_invoices.each do |invoice|
-        create(:transaction, invoice: invoice, result: 'success', created_at: Time.parse("2010-10-25"))
-      end
-      create(:invoice_item, item: merchant_3_items[0], invoice: merchant_3_invoices[0], quantity: 1, unit_price: 50)
-      create(:invoice_item, item: merchant_3_items[1], invoice: merchant_3_invoices[1], quantity: 1, unit_price: 10)
-      # fake date not searching for
-      create(:invoice_item, item: merchant_3_items[2], invoice: merchant_3_invoices[2], quantity: 1, unit_price: 10)
-      create(:invoice_item, item: merchant_3_items[3], invoice: merchant_3_invoices[3], quantity: 1, unit_price: 50)
-
-      merchant_4 = create(:merchant)
-
-      get "/api/v1/merchants/revenue?date=2010-10-31"
+      item_2 = create(:item)
+      invoice_2 = create(:invoice, created_at: "2010-01-01 00:00:00 UTC")
+      create(:invoice_item, item: item_2, invoice: invoice_2, quantity: 4, unit_price: 250)
+      create(:transaction, invoice: invoice_2, result: 'success')
+      get "/api/v1/merchants/revenue?date=2010-01-01"
 
       expect(response).to be_successful
 
       revenue = JSON.parse(response.body)
-      expect(revenue["data"]["attributes"]["total_revenue"]).to eq(200)
+      expect(revenue["data"]["attributes"]["total_revenue"]).to eq("3000.0")
     end
 
     it "returns the favorite customer associated with one merchant" do
