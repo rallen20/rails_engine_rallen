@@ -8,8 +8,12 @@
 2. Install Gems:  
 `bundle install`  
 `bundle update`
-3. Create Database:  
-`rails db:{create,migrate}`  
+3. Create Database and Install citext):  
+`rails db:create`
+`rails db`
+`CREATE EXTENSION IF NOT EXISTS citext;`
+`\q`
+`rails db:migrate`
 `rake import`
 4. Run Test Suite:  
 `rspec`
