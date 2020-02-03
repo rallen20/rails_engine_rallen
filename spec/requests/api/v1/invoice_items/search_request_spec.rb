@@ -61,10 +61,24 @@ describe "Invoice Items API - Search" do
     expect(invoice_item_parsed["attributes"]["id"]).to eq(invoice_item.id)
   end
 
-  xit "returns a single invoice item by created_at" do
+  it "returns a single invoice item by created_at" do
+    invoice_item = create(:invoice_item, created_at: "2010-01-01 00:00:00 UTC")
+    get "/api/v1/invoice_items/find?created_at=2010-01-01"
+
+    expect(response).to be_successful
+
+    invoice_item_parsed = JSON.parse(response.body)
+    expect(invoice_item_parsed["data"]["id"]).to eq(invoice_item.id.to_s)
   end
 
-  xit "returns a single invoice item by updated_at" do
+  it "returns a single invoice item by updated_at" do
+    invoice_item = create(:invoice_item, updated_at: "2010-01-01 00:00:00 UTC")
+    get "/api/v1/invoice_items/find?updated_at=2010-01-01"
+
+    expect(response).to be_successful
+
+    invoice_item_parsed = JSON.parse(response.body)
+    expect(invoice_item_parsed["data"]["id"]).to eq(invoice_item.id.to_s)
   end
 
   it "returns all invoice item by id" do
@@ -77,5 +91,25 @@ describe "Invoice Items API - Search" do
 
     invoice_item_parsed = JSON.parse(response.body)["data"]
     expect(invoice_item_parsed.count).to eq(1)
+  end
+
+  it "returns a single invoice item by created_at" do
+    create_list(:invoice_item, 2, created_at: "2010-01-01 00:00:00 UTC")
+    get "/api/v1/invoice_items/find_all?created_at=2010-01-01"
+
+    expect(response).to be_successful
+
+    invoice_item_parsed = JSON.parse(response.body)
+    expect(invoice_item_parsed["data"].count).to eq(2)
+  end
+
+  it "returns a single invoice item by updated_at" do
+    create_list(:invoice_item, 3, updated_at: "2010-01-01 00:00:00 UTC")
+    get "/api/v1/invoice_items/find_all?updated_at=2010-01-01"
+
+    expect(response).to be_successful
+
+    invoice_item_parsed = JSON.parse(response.body)
+    expect(invoice_item_parsed["data"].count).to eq(3)
   end
 end

@@ -56,10 +56,26 @@ describe "Transactions API - Search" do
     expect(transaction_parsed["data"]["id"]).to eq(transaction.id.to_s)
   end
 
-  xit "returns a single transaction by created_at" do
+  it "returns a single transaction by created_at" do
+    transaction = create(:transaction, created_at: "2010-01-01 00:00:00 UTC")
+
+    get "/api/v1/transactions/find?created_at=2010-01-01"
+
+    expect(response).to be_successful
+
+    transaction_parsed = JSON.parse(response.body)
+    expect(transaction_parsed["data"]["id"]).to eq(transaction.id.to_s)
   end
 
-  xit "returns a single transaction by updated_at" do
+  it "returns a single transaction by updated_at" do
+    transaction = create(:transaction, updated_at: "2010-01-01 00:00:00 UTC")
+
+    get "/api/v1/transactions/find?updated_at=2010-01-01"
+
+    expect(response).to be_successful
+
+    transaction_parsed = JSON.parse(response.body)
+    expect(transaction_parsed["data"]["id"]).to eq(transaction.id.to_s)
   end
 
   # find_all
@@ -124,9 +140,25 @@ describe "Transactions API - Search" do
     expect(transaction_parsed["data"].count).to eq(2)
   end
 
-  xit "returns all transactions by created_at" do
+  it "returns all transactions by created_at" do
+    create_list(:transaction, 2, created_at: "2010-01-01 00:00:00 UTC")
+
+    get "/api/v1/transactions/find_all?created_at=2010-01-01"
+
+    expect(response).to be_successful
+
+    transaction_parsed = JSON.parse(response.body)
+    expect(transaction_parsed["data"].count).to eq(2)
   end
 
-  xit "returns all transactions by updated_at" do
+  it "returns all transactions by updated_at" do
+    create_list(:transaction, 4, updated_at: "2010-03-01 00:00:00 UTC")
+
+    get "/api/v1/transactions/find_all?updated_at=2010-03-01"
+
+    expect(response).to be_successful
+
+    transaction_parsed = JSON.parse(response.body)
+    expect(transaction_parsed["data"].count).to eq(4)
   end
 end
