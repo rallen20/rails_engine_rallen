@@ -9,12 +9,12 @@
 `bundle install`  
 `bundle update`
 3. Create Database and Install citext):  
-`rails db:create`
-`rails db`
-`CREATE EXTENSION IF NOT EXISTS citext;`
-`\q`
-`rails db:migrate`
-`rake import`
+`rails db:create`  
+`rails db`  
+`CREATE EXTENSION IF NOT EXISTS citext;`  
+`\q`  
+`rails db:migrate`  
+`rake import` 
 4. Run Test Suite:  
 `rspec`
 5. Local Server for API Endpoints:  
