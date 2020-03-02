@@ -8,7 +8,7 @@
 2. Install Gems:  
 `bundle install`  
 `bundle update`
-3. Create Database and Install citext):  
+3. Create Database and Install citext:  
 `rails db:create`  
 `rails db`  
 `CREATE EXTENSION IF NOT EXISTS citext;`  
