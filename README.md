@@ -38,8 +38,15 @@
 - Example: All Find and Find All Queries that reference date should be formatted in timestamp.
   - `http://localhost:3000/api/v1/merchants/find?created_at=2012-03-27T14:54:05.000Z`
 
+### Table of Contents
 
-- Please reference all `note:`'s for special case endpoints.
+- [Customer Endpoints](#customer-endpoints)
+- [Invoice Item Endpoints](#invoice-item-endpoints)
+- [Invoice Endpoints](#invoice-endpoints)
+- [Item Endpoints](#item-endpoints)
+- [Merchant Endpoints](#merchant-endpoints)
+- [Transaction Endpoints](#transaction-endpoints)
+
 #### Data Tables
 <img width="760" alt="Screen Shot 2020-02-02 at 5 36 17 PM" src="https://user-images.githubusercontent.com/53151022/73618145-b7fda400-45e2-11ea-8d77-970999aedbfa.png">
 
