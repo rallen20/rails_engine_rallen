@@ -1,5 +1,5 @@
 # README
-In this project, I used Ruby on Rails, ActiveRecord(ORM), and a PostgreSQL DB to build a JSON API which exposes the SalesEngine data schema. The SalesEngine data schema was provided in CVS files that I imported into the PostgreSQL DB.
+In this project, I used Ruby on Rails, ActiveRecord(ORM), and a PostgreSQL DB to build a JSON API which exposes the SalesEngine data schema. The SalesEngine data schema was provided in CVS files that I then imported into the PostgreSQL DB.
 
 There are also additional endpoints that are exposed that provide business intelligences, for example `/merchants/most_revenue?quantity=x` -> returns the top `x` merchants ranked by total revenue. For additional details, please see below.
 
