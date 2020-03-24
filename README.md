@@ -1,5 +1,5 @@
 # README
-### Rails Engine - https://github.com/rallen20/rails_engine_rallen
+In this project, I used Ruby on Rails, ActiveRecord(ORM), and a PostgreSQL DB to build a JSON API which exposes the SalesEngine data schema. The SalesEngine data schema was provided in CVS files that I imported into the PostgreSQL DB.
 
 ### Local Deployment
 (Terminal Commands)
